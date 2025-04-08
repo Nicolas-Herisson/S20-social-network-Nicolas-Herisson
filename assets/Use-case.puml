@@ -1,0 +1,43 @@
+@startuml
+title Cas d'utilisation – Social network
+
+' Définition des acteurs
+actor Visitor
+actor User
+actor Admin
+
+' Cas d'utilisation pour Visitor
+usecase "Accéder au site\n(voir 5 derniers posts)" as AccessSite
+usecase "Créer un compte" as Register
+
+' Cas d'utilisation pour User
+usecase "Se connecter" as Login
+usecase "Se déconnecter" as Logout
+usecase "Voir son feed" as ViewFeed
+usecase "S'abonner à un utilisateur" as Subscribe
+usecase "Publier un post" as CreatePost
+usecase "Consulter un post" as ViewPost
+usecase "Commenter un post" as CommentPost
+
+' Cas d'utilisation pour Admin
+usecase "Supprimer un post" as DeletePost
+usecase "Bannir un utilisateur" as BanUser
+usecase "Débannir un utilisateur" as UnbanUser
+
+' Relations acteur -> cas d'utilisation
+Visitor --> AccessSite
+Visitor --> Register
+
+User --> Login
+User --> Logout
+User --> ViewFeed
+User --> Subscribe
+User --> CreatePost
+User --> ViewPost
+User --> CommentPost
+
+Admin --> DeletePost
+Admin --> BanUser
+Admin --> UnbanUser
+
+@enduml
