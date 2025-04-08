@@ -1,0 +1,23 @@
+```mermaid
+sequenceDiagram
+actor User
+actor frontend
+actor backend
+actor login
+actor subscription
+actor post
+
+
+    User->>frontend: ask feed
+    frontend->>backend: get feed
+    backend->>login: is logged?
+    login->>post: not logged
+    post-->>backend: 5 lasts posts (not logged)
+    login->>subscription: ask suscriptions (logged)
+    subscription->>post: ask posts
+    post-->>backend: own posts (not sub)
+    post-->>backend: own posts + subscribed users posts 
+    backend-->>frontend: send feed
+    frontend-->>user: display feed
+
+```
