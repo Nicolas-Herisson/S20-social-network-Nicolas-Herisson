@@ -22,7 +22,8 @@ Le feed sera une fonctionnalité novatrice, pour ne rien divulguer on voudrait d
 * Pour chaque utilisateur de la plateforme, récupérer les 5 derniers posts.
 * Par défaut, on ne verra que ses propres posts après l'inscription
 * Chaque utilisateur pourra s'abonner à d'autres utilisateurs 
-* En s'abonnant à d'autres utilisateurs, on verra les feeds des autres utilisateurs et les siens, dans l'ordre des plus récents posts vers les plus anciens.
+* En s'abonnant à d'autres utilisateurs, on verra les feeds des autres utilisateurs et les siens,
+ dans l'ordre des plus récents posts vers les plus anciens.
 
 ## Besoins techniques
 

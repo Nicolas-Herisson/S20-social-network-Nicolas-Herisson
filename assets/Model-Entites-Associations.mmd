@@ -1,0 +1,58 @@
+```mermaid
+
+erDiagram
+    USER ||--o{ POST : "create"
+    USER ||--o{ COMMENT : "write"
+    POST ||--o{ COMMENT : "contains"
+
+    USER ||--o{ SUBSCRIPTION : "has"
+
+    USER ||--o{ BAN : "belong"
+    ADMIN ||--o{ BAN : "use"
+
+    POST {
+        int id PK
+        int user_id FK
+        string content
+        date created_at
+        date updated_at
+    }
+
+    USER {
+        int id PK
+        string username
+        mail email
+        string password
+        date created_at
+        date updated_at
+    }
+
+    COMMENT {
+        int id PK
+        int post_id FK
+        int user_id FK
+        string content
+        date created_at
+    }
+
+    SUBSCRIPTION {
+        int id PK
+        int follower_id FK
+        int followed_id FK
+        date subscribed_at
+    }
+
+    BAN {
+        int id PK
+        int admin_id FK
+        int banned_user_id FK
+        datetime banned_at
+        date unbanned_at
+    }
+
+    ADMIN {
+        int id pk
+        string login
+        string password
+    }
+```

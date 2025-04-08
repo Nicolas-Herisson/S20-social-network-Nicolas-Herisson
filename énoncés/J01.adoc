@@ -1,8 +1,11 @@
 = Conception
 
-Comme pour chaque nouveau projet, on commence par un jour de conception. Alors molo sur la ligne de code, on va établir un cahier des charges complet que l'on validera avec le client.
+Comme pour chaque nouveau projet, on commence par un jour de conception.
+Alors molo sur la ligne de code, on va établir un cahier des charges complet que l'on validera avec le client.
 
-Pour faciliter notre développement, on va partir sur la conception d'un MVC rapide, car le client ne veut pas de front pour le moment. Il nous servira de base pour le développement de tous les microservices de l'application. 
+Pour faciliter notre développement, on va partir sur la conception d'un MVC rapide,
+ car le client ne veut pas de front pour le moment. 
+ Il nous servira de base pour le développement de tous les microservices de l'application. 
 
 == Objectifs pédagogiques
 
