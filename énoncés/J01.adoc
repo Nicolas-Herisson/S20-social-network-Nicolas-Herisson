@@ -21,7 +21,8 @@ A partir de l'appel d'offre du client (CDCF), établi un cahier des charges comp
 * les use cases
 * le diagramme d'entités associations
 * le diagramme de séquence pour l'affichage de son feed (voir le CDCF pour plus de précisions)
-* le diagramme d'activité pour la création d'un compte puis affichage d'un feed random (on se concentre uniquement sur la création d'un compte)
+* le diagramme d'activité pour la création d'un compte puis affichage d'un feed random 
+(on se concentre uniquement sur la création d'un compte)
 
 Pas de maquette car pas de front à proprement parlé. On fera plus tard un schéma d'architecture (quand on saura de quoi on parle 🤓)
 

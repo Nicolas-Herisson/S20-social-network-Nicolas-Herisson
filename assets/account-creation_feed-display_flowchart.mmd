@@ -1,0 +1,12 @@
+```mermaid
+flowchart TD
+    start([Homepage]) --Click on signup --> subscribePage[Display signup page]
+    subscribePage -->fillForm[fill form with mail, password, password confirmation...]
+    fillForm-->dataValidation{Data check}
+    dataValidation--> |error| subscribePage
+    dataValidation--> |ok| creatUser[Create user]
+    creatUser-->redirectFeed[Feed redirection]
+    redirectFeed-->fetchPosts[get feed]
+    fetchPosts-->displayFeed[display feed]
+
+```
