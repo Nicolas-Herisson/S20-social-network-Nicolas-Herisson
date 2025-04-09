@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+    "*.ejs": "ejs"
+    },
+    "[ejs]": {
+    "editor.formatOnSave": false
+    },
+    "emmet.includeLanguages": {
+    "ejs": "html",
+    "javascript": "javascriptreact"
+    },
+    "files.exclude": {
+        ".vscode": true
+    }
+}

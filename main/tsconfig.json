@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      // Set the JavaScript language version for emitted 
+      "target": "es2016",
+      // Specify what module code is generated.
+      "module": "commonjs",
+      // ease support for importing CommonJS modules.
+      "esModuleInterop": true,
+      // Ensure that casing is correct in imports.
+      "forceConsistentCasingInFileNames": true,
+      // Enable all strict type-checking options.
+      "strict": true,
+      // Skip type checking all .d.ts files.
+      "skipLibCheck": true
+  }}

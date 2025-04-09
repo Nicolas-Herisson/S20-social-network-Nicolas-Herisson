@@ -1,0 +1,30 @@
+# Définition des services 
+services: 
+  main: # Définition du service nommé 'main'
+    container_name: main # Nom du conteneur
+    build: # le conteneur sera construit à partir du Dockerfile
+      context: .
+      dockerfile: ./main/Dockerfile
+    volumes:
+      # Montage du rép './main' du système hôte sur '/app' dans le conteneur
+      - ./main:/app 
+    ports:
+      # Mapping du port 3000 de l'hôte sur le port 3000 du conteneur
+      - "3000:3000" 
+    depends_on:
+      - userdb
+    environment:
+      # link main with userdb
+      - MONGO_URL=mongodb://userdb:27017/demo
+      - PORT=3000
+  userdb:
+    image: mongo:latest
+    container_name: userdb
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: demo
+    volumes:
+      - ./init-users.js:/docker-entrypoint-initdb.d/init-users.js:ro
+      - /data/db
