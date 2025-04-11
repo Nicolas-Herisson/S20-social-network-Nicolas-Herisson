@@ -11,12 +11,28 @@ services:
     ports:
       # Mapping du port 3000 de l'hôte sur le port 3000 du conteneur
       - "3000:3000" 
-    depends_on:
-      - userdb
     environment:
       # link main with userdb
       - MONGO_URL=mongodb://userdb:27017/demo
+      - AUTHENTIFICATION_SERVICE_URL=http://auth:3000
       - PORT=3000
+    depends_on:
+      - userdb
+  auth:
+    container_name: auth
+    build:
+      context: .
+      dockerfile: ./auth/Dockerfile
+    volumes:
+      - ./auth:/app
+    ports:
+      - "3001:3000"
+    environment:
+      - MONGO_URL=mongodb://userdb:27017/demo
+      - JWT_SECRET=secret
+      - PORT=3000
+    depends_on:
+      - userdb
   userdb:
     image: mongo:latest
     container_name: userdb

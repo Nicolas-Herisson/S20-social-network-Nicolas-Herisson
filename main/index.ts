@@ -1,16 +1,16 @@
 import express, { Request, Response } from "express";
 import debug from "debug";
-import userRouter from "./routers/user.router";
+import userRouter from "./app/routers/user.router";
 
 // dev
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT!;
 const app = express();
 
 const serverLogger = debug("main:server");
 const controllerLogger = debug("main:controller");
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", "./app/views");
 
 
 app.use("/", userRouter);
