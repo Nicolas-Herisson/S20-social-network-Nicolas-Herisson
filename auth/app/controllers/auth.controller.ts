@@ -2,17 +2,27 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import { comparePassword, hashPassword } from "../utils";
 import { generateToken } from "../utils";
+import debug from "debug";
+
+const controllerLogger = debug("auth:controller");
 
 export async function register(req: Request, res: Response): Promise<any> {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
+
+    controllerLogger("Registering user: %s", username);
+    controllerLogger("Registering password : %s", password);
+    controllerLogger("Registering email: %s", email);
 
     if (!username || !password) 
         return res.status(400).json({ error: "Username and password are required" });
     
 
     const hashedPassword = await hashPassword(password);
-    const newUser = new User({username, hashedPassword});
-
+    controllerLogger("Hashed password: %s", hashedPassword);
+    
+    const newUser = new User({username,password: hashedPassword, email});
+    controllerLogger("New user: %s", newUser);
+    
     try {
         await newUser.save();
         res.status(201).json({ message: "User registered successfully" });

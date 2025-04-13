@@ -7,6 +7,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
         if (users)
             res.status(200).render("home", { users });
+        else
+            res.status(404).json({ error: "No users found" });
         
     } catch (error) {
         res.status(500).json({ error: "Failed to retrieve users" });
