@@ -46,14 +46,14 @@ export async function comparePassword(password: string, hash: string) :Promise<b
     }
 };
 
-export function generateToken(user: User) :string {
+export function generateToken(user: User) :jwt.JwtPayload | null | string {
     const token = jwt.sign({
         username: user.username,
         id: user.id,
     }, process.env.JWT_SECRET!, {
         expiresIn: "1h"
     });
-    return token;
+    return jwt.decode(token);
 };
 
 interface User {

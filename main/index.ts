@@ -1,23 +1,25 @@
 import express, { Request, Response } from "express";
 import debug from "debug";
 import userRouter from "./app/routers/user.router";
+import authRouter from "./app/routers/auth.router";
+import path from "path";
 
 // dev
 const PORT = process.env.PORT!;
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 const serverLogger = debug("main:server");
 const controllerLogger = debug("main:controller");
 
 app.set("view engine", "ejs");
-app.set("views", "./app/views");
+app.set("views", path.join(__dirname, "app", "views"));
 
 
 app.use("/", userRouter);
+app.use("/auth", authRouter);
 
-app.get("/:name", (req: Request, res: Response) => {
-  res.send(`Hello ${req.params.name}`);
-});
 
 app.listen(PORT, () => {
   serverLogger(`🚀 server ready at http://localhost:${PORT}`);

@@ -9,7 +9,6 @@ const serverLogger = debug("auth:server");
 const controllerLogger = debug("auth:controller");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.use("/", authRouter);
 

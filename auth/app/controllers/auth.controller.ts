@@ -27,36 +27,41 @@ export async function register(req: Request, res: Response): Promise<any> {
         await newUser.save();
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
-        res.status(500).json({ error: "Failed to register user" });
+        res.status(500).json({ message: "Failed to register user" });
     }
 };
 
 export async function login(req: Request, res: Response): Promise<any> {
     const { username, password } = req.body;
 
+    controllerLogger("Logging in user: %s", username);
+    controllerLogger("Logging in password : %s", password);
+    
     if (!username || !password) 
         return res.status(400).json({ error: "Username and password are required" });
     
 
     try {
         const user = await User.findOne({ username });
-
+        controllerLogger("User found: %s", user);
+    
         if (!user) 
             return res.status(401).json({ error: "Invalid credentials" });
         
 
         const isPasswordValid = await comparePassword(password, user.password);
+        controllerLogger("Password valid: %s", isPasswordValid);
 
         if (!isPasswordValid) 
             return res.status(401).json({ error: "Invalid credentials" });
     
 
-        res.status(200).json({ message: "Login successful" });
-
         const token = generateToken({id: user._id.toString(), username: user.username});
+        controllerLogger("Token generated: %s", token);
+
         res.json({ token, user });
     } catch (error) {
-        res.status(500).json({ error: "Failed to login" });
+        res.status(500).json({ message: "Failed to login" });
     }
 };
 
@@ -67,8 +72,9 @@ export async function listUsers(req: Request, res: Response) {
         if (users) 
             res.status(200).json(users);
         else 
-            res.status(404).json({ error: "No users found" });
+            res.status(404).json({ message: "No users found" });
+        
     } catch (error) {
-        res.status(500).json({ error: "Failed to retrieve users" });
+        res.status(500).json({ message: "Failed to retrieve users" });
     }
 };
