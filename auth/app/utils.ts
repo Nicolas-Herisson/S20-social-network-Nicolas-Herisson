@@ -53,7 +53,7 @@ export function generateToken(user: User) :jwt.JwtPayload | null | string {
     }, process.env.JWT_SECRET!, {
         expiresIn: "1h"
     });
-    return jwt.decode(token);
+    return token;
 };
 
 interface User {

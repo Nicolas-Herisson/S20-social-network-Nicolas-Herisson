@@ -10,15 +10,15 @@ export async function register(req: Request, res: Response): Promise<any> {
     const { username, password, email } = req.body;
 
     controllerLogger("Registering user: %s", username);
-    controllerLogger("Registering password : %s", password);
-    controllerLogger("Registering email: %s", email);
+    // controllerLogger("Registering password : %s", password);
+    // controllerLogger("Registering email: %s", email);
 
     if (!username || !password) 
         return res.status(400).json({ error: "Username and password are required" });
     
 
     const hashedPassword = await hashPassword(password);
-    controllerLogger("Hashed password: %s", hashedPassword);
+    // controllerLogger("Hashed password: %s", hashedPassword);
     
     const newUser = new User({username,password: hashedPassword, email});
     controllerLogger("New user: %s", newUser);
@@ -35,7 +35,7 @@ export async function login(req: Request, res: Response): Promise<any> {
     const { username, password } = req.body;
 
     controllerLogger("Logging in user: %s", username);
-    controllerLogger("Logging in password : %s", password);
+    // controllerLogger("Logging in password : %s", password);
     
     if (!username || !password) 
         return res.status(400).json({ error: "Username and password are required" });
@@ -43,7 +43,7 @@ export async function login(req: Request, res: Response): Promise<any> {
 
     try {
         const user = await User.findOne({ username });
-        controllerLogger("User found: %s", user);
+        // controllerLogger("User found: %s", user);
     
         if (!user) 
             return res.status(401).json({ error: "Invalid credentials" });
@@ -57,9 +57,9 @@ export async function login(req: Request, res: Response): Promise<any> {
     
 
         const token = generateToken({id: user._id.toString(), username: user.username});
-        controllerLogger("Token generated: %s", token);
+        // controllerLogger("Token generated: %s", token);
 
-        res.json({ token, user });
+        res.json({ token });
     } catch (error) {
         res.status(500).json({ message: "Failed to login" });
     }

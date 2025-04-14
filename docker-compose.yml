@@ -15,6 +15,7 @@ services:
       # link main with userdb
       - MONGO_URL=mongodb://userdb:27017/demo
       - AUTHENTIFICATION_SERVICE_URL=http://auth:3000
+      - JWT_SECRET=secret
       - PORT=3000
     depends_on:
       - userdb
