@@ -15,9 +15,6 @@ export const registerPage = async (req: Request, res: Response) => {
     res.render("register", {message: null});
 };
 
-export const feedPage = async (req: Request, res: Response) => {
-    res.render("feed");
-};
 
 export async function register(req: Request, res: Response): Promise<any> {
     try {
@@ -45,26 +42,16 @@ export async function login(req: Request, res: Response): Promise<any> {
     try {
         const body = req.body;
 
-        if (!body.username || !body.password) 
-            return res.status(400).json({ error: "Username and password are required" });
+        if (!body.email || !body.password) 
+            return res.status(400).json({ error: "Email and password are required" });
         
 
         const result = await axios.post(`${AUTH_SERVICE_URL}/login`, body);
 
-        controllerLogger("Login response, %s", result.data.token);
-        if (result.data.token) {
-            controllerLogger("In if, secret: %s", process.env.JWT_SECRET);
-            const data = jwt.verify(result.data.token, process.env.JWT_SECRET!) as jwt.JwtPayload;
-            controllerLogger("After verify: %s", data);
-            res.cookie("token", data, {sameSite: "strict", httpOnly: true});
-            controllerLogger("After cookie storage");
-            res.locals.user = data;
-            controllerLogger("After locals storage");
-        }
+        //      httpOnly: only via http | sameSite: strict =  domain's name only
+        res.cookie("token", result.data.token, { sameSite: "strict", httpOnly: true });
         
-        controllerLogger("Login response, %s", result.data.token);
-        res.status(200).render("feed", {message: "User logged in successfully", token: result.data.token, redirect: true});
-        // feedPage(req, res);
+        res.status(200).redirect("/feed");
     } catch (error) {
         res.status(500).render("login", { message: "Username or password is incorrect", redirect: true });
     }
@@ -80,3 +67,11 @@ export async function listUsers(req: Request, res: Response): Promise<any> {
     }
 };
 
+export async function logout(req: Request, res: Response): Promise<any> {
+    try {
+        res.clearCookie("token");
+        res.status(200).redirect("/");
+    } catch (error) {
+        res.status(500).json({ error: "Failed to logout" });
+    }
+};

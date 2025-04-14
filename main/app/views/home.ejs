@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MonRéseau - Bienvenue</title>
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/feed.css">
 </head>
-<body style="text-align: center; background-color: black; color: white">
-    <h1>Liste des utilisateurs</h1>
-    <ul>
-        <% users.forEach(user => { %>
-            <li><%= user.username %></li>
-        <% }) %>
-    </ul>
+<body>
+  <div class="container">
+    <h1>Bienvenue sur MonRéseau</h1>
+    <p>Connectez-vous pour accéder à vos données et interagir avec la communauté.</p>
+    <div class="btn-group">
+      <a href="/auth/login" class="btn">Se connecter</a>
+      <a href="/auth/register" class="btn">S'enregistrer</a>
+    </div>
+  </div>
 </body>
 </html>

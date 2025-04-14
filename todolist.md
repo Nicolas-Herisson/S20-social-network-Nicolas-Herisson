@@ -9,3 +9,18 @@
 
 ## feat
 - [ ] Logout
+
+
+<!--
+  <div class="users-online">
+    <h2>Utilisateurs</h2>
+    <ul>
+      <% for (let user of locals.users) { %>
+        <li>
+          <img src="<%= user.image %>" />
+          <%= user.firstname %> <%= user.lastname %>
+        </li>
+        <% } %>
+    </ul>
+  </div>
+-->

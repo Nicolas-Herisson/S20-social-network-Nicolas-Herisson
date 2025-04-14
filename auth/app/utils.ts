@@ -49,6 +49,7 @@ export async function comparePassword(password: string, hash: string) :Promise<b
 export function generateToken(user: User) :jwt.JwtPayload | null | string {
     const token = jwt.sign({
         username: user.username,
+        email: user.email,
         id: user.id,
     }, process.env.JWT_SECRET!, {
         expiresIn: "1h"
@@ -58,5 +59,6 @@ export function generateToken(user: User) :jwt.JwtPayload | null | string {
 
 interface User {
     username: string;
+    email: string;
     id: string;
 }

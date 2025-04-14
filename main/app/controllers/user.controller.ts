@@ -1,16 +1,12 @@
-import User from "../models/user.model";
 import { Request, Response } from "express";
 
-export const getAllUsers = async (req: Request, res: Response) => {
-    try {
-        const users = await User.find();
-
-        if (users)
-            res.status(200).render("home", { users });
-        else
-            res.status(404).json({ error: "No users found" });
+export const homePage = async (req: Request, res: Response) => {
+    if (!res.locals.user)
+        return res.render("home");
         
-    } catch (error) {
-        res.status(500).json({ error: "Failed to retrieve users" });
-    }
+    res.redirect("/feed");
+};
+
+export const feedPage = async (req: Request, res: Response) => {
+    res.render("feed");
 };
