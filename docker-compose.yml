@@ -30,7 +30,22 @@ services:
       - "3001:3000"
     environment:
       - MONGO_URL=mongodb://userdb:27017/demo
+      - API_URL=http://api:3000
       - JWT_SECRET=secret
+      - PORT=3000
+    depends_on:
+      - userdb
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    volumes:
+      - ./api:/app
+    ports:
+      - "3002:3000"
+    environment:
+      - MONGO_URL=mongodb://userdb:27017/demo
       - PORT=3000
     depends_on:
       - userdb
@@ -43,5 +58,6 @@ services:
     environment:
       MONGO_INITDB_DATABASE: demo
     volumes:
+      - ./init-posts.js:/docker-entrypoint-initdb.d/init-posts.js:ro
       - ./init-users.js:/docker-entrypoint-initdb.d/init-users.js:ro
       - /data/db

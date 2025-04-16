@@ -6,9 +6,11 @@
 - [x] verify token
 - [x] store token in cookie
 - [x] store user in locals
+- [ ] send mail via authentification bearer
 
 ## feat
-- [ ] Logout
+- [x] Logout
+- [ ] add user img and display
 
 
 <!--

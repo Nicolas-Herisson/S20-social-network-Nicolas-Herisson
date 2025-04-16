@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
-import User from "../models/user.model";
+// import User from "../models/user.model";
 import { comparePassword, hashPassword } from "../utils";
 import { generateToken } from "../utils";
 import debug from "debug";
+import axios from "axios";
 
+
+const api_url = process.env.API_URL!;
 const controllerLogger = debug("auth:controller");
 
 export async function register(req: Request, res: Response): Promise<any> {
@@ -19,16 +22,19 @@ export async function register(req: Request, res: Response): Promise<any> {
     const hashedPassword = await hashPassword(password);
     // controllerLogger("Hashed password: %s", hashedPassword);
     
-    const newUser = new User({username,password: hashedPassword, email});
+
+    //const newUser = new User({username,password: hashedPassword, email});
     // controllerLogger("New user: %s", newUser);
     
     try {
-        await newUser.save();
+        const {data} = await axios.post(`${api_url}/api/users/create`, {username, password: hashedPassword, email});
+        //await newUser.save();
+        controllerLogger("User registered successfully: %s", data);
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
         res.status(500).json({ message: "Failed to register user" });
     }
-};
+}
 
 export async function login(req: Request, res: Response): Promise<any> {
     const { password, email } = req.body;
@@ -40,21 +46,22 @@ export async function login(req: Request, res: Response): Promise<any> {
         return res.status(400).json({ error: "password, and email are required" });
     
     try {
-        const user = await User.findOne({ email });
+        const {data} = await axios.get(`${api_url}/api/users/detail`, {data: {password, email}});
+        // const user = await User.findOne({ email });
         // controllerLogger("User found: %s", user);
-    
-        if (!user) 
+
+        if (!data) 
             return res.status(401).json({ error: "Invalid credentials" });
         
 
-        const isPasswordValid = await comparePassword(password, user.password);
+        const isPasswordValid = await comparePassword(password, data.password);
         controllerLogger("Password valid: %s", isPasswordValid);
 
         if (!isPasswordValid) 
             return res.status(401).json({ error: "Invalid credentials" });
     
 
-        const token = generateToken({id: user._id.toString(), username: user.username, email: user.email});
+        const token = generateToken({id: data._id.toString(), username: data.username, email: data.email});
         // controllerLogger("Token generated: %s", token);
 
         res.json({ token });
@@ -66,10 +73,10 @@ export async function login(req: Request, res: Response): Promise<any> {
 
 export async function listUsers(req: Request, res: Response) {
     try {
-        const users = await User.find();
+        const {data} = await axios.get(`${api_url}/api/users/list`);
 
-        if (users) 
-            res.status(200).json(users);
+        if (data) 
+            res.status(200).json(data);
         else 
             res.status(404).json({ message: "No users found" });
         
