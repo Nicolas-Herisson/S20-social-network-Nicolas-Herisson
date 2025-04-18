@@ -12,7 +12,8 @@
 		"debug": "^4.4.0",
 		"express": "^5.1.0",
 		"jsonwebtoken": "^9.0.2",
-		"mongoose": "^8.13.2"
+		"mongoose": "^8.13.2",
+		"social-network": "file:.."
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.12",

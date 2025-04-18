@@ -6,23 +6,14 @@
 - [x] verify token
 - [x] store token in cookie
 - [x] store user in locals
+- [ ] use authCheck mw on main
 - [ ] send mail via authentification bearer
+- [ ] implement redis for posts
 
 ## feat
 - [x] Logout
 - [ ] add user img and display
+- [ ] implement posts dynamically
+- [ ] implement posts creation
 
 
-<!--
-  <div class="users-online">
-    <h2>Utilisateurs</h2>
-    <ul>
-      <% for (let user of locals.users) { %>
-        <li>
-          <img src="<%= user.image %>" />
-          <%= user.firstname %> <%= user.lastname %>
-        </li>
-        <% } %>
-    </ul>
-  </div>
--->

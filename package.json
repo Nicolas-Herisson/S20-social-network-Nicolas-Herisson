@@ -1,0 +1,14 @@
+{
+    "name": "social-network",
+    "description": "Social network",
+    "keywords": [
+        "social-network"
+    ],
+    "author": "Nicolas Herisson",
+    "license": "ISC",
+    "type": "module",
+    "scripts": {
+        "dev:docker": "docker compose up",
+        "dev:install": "npm --prefix auth install && npm --prefix main install && npm --prefix api install"
+    }
+}
