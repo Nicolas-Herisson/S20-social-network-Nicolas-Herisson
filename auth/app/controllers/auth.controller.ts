@@ -27,7 +27,7 @@ export async function register(req: Request, res: Response): Promise<any> {
     // controllerLogger("New user: %s", newUser);
     
     try {
-        const {data} = await axios.post(`${api_url}/api/users/create`, {username, password: hashedPassword, email});
+        const {data} = await axios.post(`${api_url}/api/users/`, {username, password: hashedPassword, email});
         //await newUser.save();
         controllerLogger("User registered successfully: %s", data);
         res.status(201).json({ message: "User registered successfully" });
@@ -46,7 +46,7 @@ export async function login(req: Request, res: Response): Promise<any> {
         return res.status(400).json({ error: "password, and email are required" });
     
     try {
-        const {data} = await axios.get(`${api_url}/api/users/detail`, {data: {password, email}});
+        const {data} = await axios.get(`${api_url}/api/users/${email}`);
         // const user = await User.findOne({ email });
         // controllerLogger("User found: %s", user);
 
