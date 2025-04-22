@@ -84,12 +84,3 @@ export async function listUsers(req: Request, res: Response) {
         res.status(500).json({ message: "Failed to retrieve users" });
     }
 };
-
-export async function pwd(req: Request, res: Response) {
-    console.log("In pwd");
-    console.log(req.query);
-    const {password} = req.query;
- 
-    const hashedPassword = await hashPassword(password as string);
-    res.status(200).json({ hashedPassword });
-}

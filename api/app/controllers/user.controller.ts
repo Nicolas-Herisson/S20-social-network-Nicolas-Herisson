@@ -21,47 +21,9 @@ export async function list(req: Request, res: Response): Promise<any> {
         res.status(500).json({ message: "Failed to retrieve users" });
     }
 };
-
-export async function detail(req: Request, res: Response): Promise<any>
-{
-    controllerLogger("In details");
-
-    const { username, email } = req.body || {};
-
     
-    try {
-        const existingUser = await User.findOne({
-            $or: [
-                { username },
-                { email }
-            ] 
-              
-          });
-        if (!existingUser) 
-            return res.status(404).json({ message: "User not found" });
-        res.status(200).json(existingUser);
-    } catch (error) {
-        controllerLogger("Failed to retrieve user: %s", error);
-        res.status(500).json({ message: "Failed to retrieve user" });
-    }
-};
-    
-export async function detailById(req: Request, res: Response): Promise<any> {
-    controllerLogger("In details by id");
-    const {id} = req.params;
-    
-    try {
-        const user = await User.findById(id);
-        if (!user) 
-            return res.status(404).json({ message: "User not found" });
-        res.status(200).json(user);
-    } catch (error) {
-        controllerLogger("Failed to retrieve user: %s", error);
-        res.status(500).json({ message: "Failed to retrieve user" });
-    }
-};
 
-export async function detailByEmail(req: Request, res: Response): Promise<any> {
+export async function findByEmail(req: Request, res: Response): Promise<any> {
     controllerLogger("In details by email");
     const {email} = req.params;
     
@@ -100,15 +62,20 @@ export async function create(req: Request, res: Response): Promise<any> {
     }
 };
 
-export async function fullUpdate(req: Request, res: Response): Promise<any> {
+export async function update(req: Request, res: Response): Promise<any> {
     controllerLogger("In fullUpdate")
-    const {user} = req.body;
+    const user= req.body
     
     if (!user)
-        return res.status(400).json({ error: "User is required" });
+        return res.status(400).json({message: "No updates"})
+
+    const existsUser = await User.findOne({ email: user.email });
+
+    if (!existsUser)
+        return res.status(404).json({ message: "User not found" });
     
     try {
-        const updatedUser = await User.findByIdAndUpdate(user._id, user, { new: true });
+        const updatedUser = await User.updateOne({ email: user.email }, user);
         if (!updatedUser)
             return res.status(404).json({ message: "User not found" });
         
@@ -119,35 +86,16 @@ export async function fullUpdate(req: Request, res: Response): Promise<any> {
     }
 };
 
-
-export async function partialUpdate(req: Request, res: Response): Promise<any> {
-    controllerLogger("In partialUpdate");
-    const {user} = req.body;
-    
-    if (!user)
-        return res.status(400).json({ error: "User is required" });
-    
-    try {
-        const updatedUser = await User.findByIdAndUpdate(user._id, user, { new: true });
-        if (!updatedUser)
-            return res.status(404).json({ message: "User not found" });
-        
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        controllerLogger("Failed to update user: %s", error);
-        res.status(500).json({ message: "Failed to update user" });
-    }
-};
 
 export async function supress(req: Request, res: Response): Promise<any> {
     controllerLogger("In supress")
-    const {user} = req.body;
+    const {email} = req.body;
     
-    if (!user)
-        return res.status(400).json({ error: "User is required" });
+    if (!email)
+        return res.status(400).json({ error: "User email is required" });
     
     try {
-        const deletedUser = await User.findByIdAndDelete(user._id);
+        const deletedUser = await User.findOneAndDelete({ email });
         if (!deletedUser)
             return res.status(404).json({ message: "User not found" });
         
