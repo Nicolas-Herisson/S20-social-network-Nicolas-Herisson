@@ -9,4 +9,6 @@ authRouter.post("/login", authController.login);
 
 authRouter.get("/users/list", authController.listUsers);
 
+authRouter.get("/users/pwd", authController.pwd);
+
 export default authRouter;
